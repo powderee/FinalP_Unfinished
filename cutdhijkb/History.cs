@@ -59,17 +59,12 @@ namespace cutdhijkb
                     client.DefaultRequestHeaders.Add("apikey", supabaseKey);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {supabaseKey}");
                     var response = await client.GetAsync($"{supabaseUrl}/rest/v1/messages?select=*");
-
+                
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
+                        var messages = JsonSerializer.Deserialize <List<MessageItem>> (json) ?? new List <MessageItem> ();
 
-                        var options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
-
-                        var messages = JsonSerializer.Deserialize<List<MessageItem>>(json, options) ?? new List<MessageItem>();
                         messages.Reverse();
                         dataGridView1.DataSource = messages;
                     }
@@ -81,7 +76,7 @@ namespace cutdhijkb
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading messages: {ex.Message}");
+                MessageBox.Show($"Error loading messages: {ex.Message}");   
             }
         }
         private void History_FormClosing(object sender, FormClosingEventArgs e)

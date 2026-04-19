@@ -1,13 +1,14 @@
-﻿using NetSpell.SpellChecker;
-using NetSpell.SpellChecker.Dictionary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http;
+using NetSpell.SpellChecker;
+using NetSpell.SpellChecker.Dictionary;
+using System.Drawing;
 
 namespace cutdhijkb
 {
@@ -28,9 +29,10 @@ namespace cutdhijkb
 
         public class MessageItem
         {
-            public string Email { get; set; }
-            public string Content { get; set; }
-            public override string ToString() { return Email; }
+            public string email { get; set; }
+            public string content { get; set; }
+            public string status { get; set; }
+            public override string ToString() { return email; }
         }
 
         private void Start_Load(object sender, EventArgs e) { }
@@ -44,6 +46,7 @@ namespace cutdhijkb
         {
             List<string> email_redflag = new List<string> { "wwvv", "vvww", "wvvw", "wwww", "gmial", "gmalL", "c0m" };
             List<string> content_redflag = new List<string> { "  ", "   ", "http", "expire", "ban", "Ban", "Expire", "hours", "warning", "WARNING", "DANGER", "danger", "unpaid", "leak", "LEAK", "pay" };
+            string stat;
 
             sus = email.Text;
             sussy = 0;
@@ -60,7 +63,6 @@ namespace cutdhijkb
             {
                 if (sus.IndexOf(word) >= 0)
                     sussy++;
-                //idk man
             }
 
             char[] separators = new char[] { ' ', '\n', '\r', '.', ',', '!', '?' };
@@ -70,19 +72,54 @@ namespace cutdhijkb
             {
                 if (!Spell.TestWord(word))
                     sussy++;
-                //will add something when after procrastinating 🙏🙏
 
                 foreach (string flag in content_redflag)
                 {
                     if (word.IndexOf(flag) >= 0)
                         sussy++;
-                    //asdajdsdasjdsadasdj
                 }
             }
 
-            MessageBox.Show($"Suspicion Score: {sussy}");
+            //will try to maybe make it a function if i win my next ranked😭🙏
 
-            await SendToSupabase(email.Text, content.Text);
+            if (sussy <= 1) 
+            {
+                stat = "Safe";
+                Status.Text = stat;
+                panel1.BackColor = Color.Green;
+                panel2.BackColor = Color.Green;
+                panel3.BackColor = Color.Green;
+            }
+
+
+            else if (sussy <= 3)
+            {
+                stat = "Caution";
+                Status.Text = stat;
+                panel1.BackColor = Color.Red;
+                panel2.BackColor = Color.Green;
+                panel3.BackColor = Color.Green;
+
+            }
+
+            else if (sussy <= 7)
+            {
+                stat = "Highly Suspisious";
+                Status.Text = stat;
+                panel1.BackColor = Color.Red;
+                panel2.BackColor = Color.Red;
+                panel3.BackColor = Color.Green;
+            }
+            else
+            {
+                stat = "WARNING AVOID";
+                Status.Text = stat;
+                panel1.BackColor = Color.Red;
+                panel2.BackColor = Color.Red;
+                panel3.BackColor = Color.Red;
+            }
+            MessageBox.Show($"Suspicion Score: {sussy}\nThe verdict is {Status}");
+            //removed SendToSupabase in testsssssss
         }
 
         private async void button3_Click(object sender, EventArgs e)
@@ -94,14 +131,14 @@ namespace cutdhijkb
             }
             else
             {
-                await SendToSupabase(email.Text, content.Text);
+                await SendToSupabase(email.Text, content.Text , Status.Text);
                 await history.LoadMessages();
                 history.Show();
                 this.Hide();
             }
         }
 
-        private async Task SendToSupabase(string email, string content)
+        private async Task SendToSupabase(string email, string content , string Status)
         {
             try
             {
@@ -127,6 +164,11 @@ namespace cutdhijkb
             {
                 MessageBox.Show($"Failed to send: {ex.Message}");
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

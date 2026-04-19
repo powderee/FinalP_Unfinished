@@ -1,6 +1,3 @@
 <Solution>
-  <Folder Name="/Solution Items/">
-    <File Path="../../../.nuget/packages/netspell/2.1.7/dic/en-US.dic" />
-  </Folder>
   <Project Path="cutdhijkb/cutdhijkb.csproj" Id="b81217c2-2f9b-4158-8dc3-dad4f94dafe0" />
 </Solution>
