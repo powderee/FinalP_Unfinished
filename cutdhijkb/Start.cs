@@ -18,7 +18,8 @@ namespace cutdhijkb
         string sus;
         int sussy;
         public string cont;
-
+        string stat;
+        string varss = "";
         private static readonly string supabaseUrl = "https://vqpqciykbjwvzzvtknjg.supabase.co";
         private static readonly string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxcHFjaXlrYmp3dnp6dnRrbmpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5Mzg4MjksImV4cCI6MjA5MDUxNDgyOX0.MuZyRSXUjRTM0TaS7fHAa8DIdASv87daNdvEQz5ZfAM";
 
@@ -46,7 +47,6 @@ namespace cutdhijkb
         {
             List<string> email_redflag = new List<string> { "wwvv", "vvww", "wvvw", "wwww", "gmial", "gmalL", "c0m" };
             List<string> content_redflag = new List<string> { "  ", "   ", "http", "expire", "ban", "Ban", "Expire", "hours", "warning", "WARNING", "DANGER", "danger", "unpaid", "leak", "LEAK", "pay" };
-            string stat;
 
             sus = email.Text;
             sussy = 0;
@@ -112,13 +112,14 @@ namespace cutdhijkb
             }
             else
             {
-                stat = "WARNING AVOID";
+                stat = "!!WARNING AVOID!!";
                 Status.Text = stat;
                 panel1.BackColor = Color.Red;
                 panel2.BackColor = Color.Red;
                 panel3.BackColor = Color.Red;
             }
-            MessageBox.Show($"Suspicion Score: {sussy}\nThe verdict is {Status}");
+            MessageBox.Show($"Suspicion Score: {sussy}\nThe verdict is {stat}");
+            varss = stat;
             //removed SendToSupabase in testsssssss
         }
 
@@ -131,14 +132,14 @@ namespace cutdhijkb
             }
             else
             {
-                await SendToSupabase(email.Text, content.Text , Status.Text);
+                await SendToSupabase(email.Text, content.Text , varss);
                 await history.LoadMessages();
                 history.Show();
                 this.Hide();
             }
         }
 
-        private async Task SendToSupabase(string email, string content , string Status)
+        private async Task SendToSupabase(string email, string content , string status)
         {
             try
             {
@@ -148,7 +149,7 @@ namespace cutdhijkb
                     client.DefaultRequestHeaders.Add("apikey", supabaseKey);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {supabaseKey}");
 
-                    var obj = new { email = email, content = content };
+                    var obj = new { email = email, content = content , status = stat};
                     var json = JsonSerializer.Serialize(obj);
                     var data = new StringContent(json, Encoding.UTF8, "application/json");
 
