@@ -20,9 +20,8 @@ namespace cutdhijkb
         public string cont;
         string stat;
         string varss = "";
-        private static readonly string supabaseUrl = "https://vqpqciykbjwvzzvtknjg.supabase.co";
-        private static readonly string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxcHFjaXlrYmp3dnp6dnRrbmpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5Mzg4MjksImV4cCI6MjA5MDUxNDgyOX0.MuZyRSXUjRTM0TaS7fHAa8DIdASv87daNdvEQz5ZfAM";
-
+        readonly string supabaseUrl = System.Configuration.ConfigurationManager.AppSettings["SupabaseUrl"];
+        readonly string supabaseKey = System.Configuration.ConfigurationManager.AppSettings["SupabaseKey"];
         public Start()
         {
             InitializeComponent();
