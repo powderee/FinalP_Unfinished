@@ -32,7 +32,6 @@ namespace cutdhijkb
             public string email { get; set; }
             public string content { get; set; }
             public string status { get; set; }
-            public override string ToString() { return email; }
         }
 
         private void Start_Load(object sender, EventArgs e) { }
