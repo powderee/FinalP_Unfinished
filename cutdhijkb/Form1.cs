@@ -19,24 +19,17 @@ namespace cutdhijkb
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Start start = new Start();
-            start.Show();
-
+            new Start().Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            History history = new History();
-            history.Show();
+            new History().Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
-            History history = new History();
-            Start start = new Start();
-            start.Close();
-            history.Show();
         }
     }
 }

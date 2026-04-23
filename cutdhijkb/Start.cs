@@ -122,21 +122,18 @@ namespace cutdhijkb
             //removed SendToSupabase in testsssssss
         }
 
-        private async void button3_Click(object sender, EventArgs e)
-        {
-            history = new History();
-            if (email.Text == "" || content.Text == "")
-            {
-                MessageBox.Show("!!Warning!!\nEmail and/or Content Cannot be empty");
-            }
-            else
-            {
-                await SendToSupabase(email.Text, content.Text , varss);
-                await history.LoadMessages();
-                history.Show();
-                this.Hide();
-            }
-        }
+private async void button3_Click(object sender, EventArgs e)
+{
+    if (email.Text == "" || content.Text == "")
+    {
+        MessageBox.Show("!!Warning!!\nEmail and/or Content Cannot be empty");
+        return;
+    }
+    await SendToSupabase(email.Text, content.Text, varss);
+    History history = new History();
+    history.Show();
+    this.Hide();
+}
 
         private async Task SendToSupabase(string email, string content , string status)
         {

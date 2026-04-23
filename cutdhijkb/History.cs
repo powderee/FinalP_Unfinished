@@ -51,6 +51,7 @@ namespace cutdhijkb
 
         public async Task LoadMessages()
         {
+
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -59,7 +60,7 @@ namespace cutdhijkb
                     client.DefaultRequestHeaders.Add("apikey", supabaseKey);
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {supabaseKey}");
                     var response = await client.GetAsync($"{supabaseUrl}/rest/v1/messages?select=*");
-                
+
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
